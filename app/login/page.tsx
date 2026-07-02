@@ -10,7 +10,7 @@ import { createClient } from "@/lib/supabase/client";
 export default function LoginPage() {
   const router = useRouter();
   const supabase = createClient();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -19,10 +19,24 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+
+    // 1) Cari email yang terhubung dengan username ini
+    const { data: email, error: lookupError } = await supabase.rpc(
+      "get_email_by_username",
+      { p_username: username.trim() }
+    );
+
+    if (lookupError || !email) {
+      setLoading(false);
+      setError("Username atau kata sandi salah.");
+      return;
+    }
+
+    // 2) Login seperti biasa menggunakan email hasil lookup
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     setLoading(false);
     if (error) {
-      setError(error.message);
+      setError("Username atau kata sandi salah.");
       return;
     }
     router.push("/dashboard");
@@ -50,17 +64,19 @@ export default function LoginPage() {
 
         <form onSubmit={handleLogin} className="mt-8 space-y-4">
           <div>
-            <label className="text-sm font-medium" htmlFor="email">
-              Email
+            <label className="text-sm font-medium" htmlFor="username">
+              Username
             </label>
             <input
-              id="email"
-              type="email"
+              id="username"
+              type="text"
+              autoCapitalize="none"
+              autoCorrect="off"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              placeholder="nama@pasar.go.id"
+              placeholder="admin.pasarbatu"
             />
           </div>
           <div>
