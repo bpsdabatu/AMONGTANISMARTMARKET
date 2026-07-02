@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  AmongTaniSmartMarket — Design Tokens
+  ------------------
+  Palette diambil dari suasana pasar: atap seng & aksen merah-bata
+  bangunan pasar (primary), hijau tua alami sebagai warna dasar gelap
+  (ink/foreground), teal sebagai warna kepercayaan & keuangan (secondary),
+  dan emas sebagai aksen nilai transaksi/retribusi (gold).
+*/
+
+@layer base {
+  :root {
+    --background: 43 41% 97%;
+    --foreground: 140 22% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 140 22% 11%;
+
+    --primary: 19 84% 40%;
+    --primary-foreground: 43 41% 97%;
+
+    --secondary: 168 76% 24%;
+    --secondary-foreground: 43 41% 97%;
+
+    --gold: 43 63% 47%;
+    --gold-foreground: 140 22% 11%;
+
+    --muted: 43 20% 92%;
+    --muted-foreground: 140 10% 35%;
+
+    --border: 43 20% 88%;
+    --input: 43 20% 88%;
+    --ring: 19 84% 40%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 43 41% 97%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 140 24% 7%;
+    --foreground: 43 30% 94%;
+
+    --card: 140 18% 10%;
+    --card-foreground: 43 30% 94%;
+
+    --primary: 19 84% 54%;
+    --primary-foreground: 140 24% 7%;
+
+    --secondary: 168 55% 40%;
+    --secondary-foreground: 140 24% 7%;
+
+    --gold: 43 70% 58%;
+    --gold-foreground: 140 24% 7%;
+
+    --muted: 140 14% 15%;
+    --muted-foreground: 43 15% 65%;
+
+    --border: 140 14% 19%;
+    --input: 140 14% 19%;
+    --ring: 19 84% 54%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 43 30% 94%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+}
+
+/* Latar belakang foto pasar, transparan 50%, dipakai di hero & section aksen */
+.market-backdrop {
+  position: relative;
+  background-image: linear-gradient(
+      to bottom,
+      hsl(var(--background) / 0.94) 0%,
+      hsl(var(--background) / 0.72) 35%,
+      hsl(var(--background) / 0.88) 100%
+    ),
+    url("/images/market-hero.jpg");
+  background-size: cover;
+  background-position: center 65%;
+}
+
+.dark .market-backdrop {
+  background-image: linear-gradient(
+      to bottom,
+      hsl(var(--background) / 0.95) 0%,
+      hsl(var(--background) / 0.78) 35%,
+      hsl(var(--background) / 0.92) 100%
+    ),
+    url("/images/market-hero.jpg");
+}
+
+.stall-grid-bg {
+  background-image: linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
