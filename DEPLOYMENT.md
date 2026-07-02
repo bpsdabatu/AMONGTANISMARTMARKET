@@ -60,8 +60,27 @@ Vercel otomatis membangun ulang setiap ada push ke branch `main`
 
 ## 5. Perubahan Skema Database di Kemudian Hari
 
-Simpan setiap perubahan skema sebagai file SQL baru di `supabase/migrations/`
-(buat foldernya jika belum ada), beri nama berurutan, contoh:
-`0002_tambah_kolom_diskon_retribusi.sql`. Jalankan manual lewat SQL Editor,
-atau gunakan Supabase CLI (`supabase migration up`) jika sudah menghubungkan
-project lokal dengan `supabase link`.
+Simpan setiap perubahan skema sebagai file SQL baru di `supabase/migrations/`,
+beri nama berurutan, contoh: `0002_tambah_kolom_diskon_retribusi.sql`.
+Jalankan manual lewat SQL Editor, atau gunakan Supabase CLI
+(`supabase migration up`) jika sudah menghubungkan project lokal dengan
+`supabase link`.
+
+### Migrasi 0002 — Login Username & Harga Bahan Pokok
+
+Jika project Anda **sudah live** (sudah menjalankan `schema.sql` +
+`rls.sql` sebelumnya), jalankan file ini satu kali di **SQL Editor**
+Supabase:
+
+```
+supabase/migrations/0002_username_dan_harga_pangan.sql
+```
+
+Migrasi ini menambahkan:
+- Kolom `username` di `profiles` + fungsi `email_for_username()` agar staf
+  bisa login pakai username, bukan email
+- Tabel `komoditas` dan `harga_komoditas` untuk dashboard publik harga
+  bahan pokok, lengkap dengan RLS dan 15 komoditas awal
+
+Setelah itu, ikuti `supabase/PANDUAN_AKUN_STAF.md` untuk membuat akun
+staf dengan username.

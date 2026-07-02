@@ -13,12 +13,15 @@ export function Cta() {
           Mulai dari Modul Master Data, aktifkan modul lain kapan pun
           dibutuhkan. Semua data tersinkron secara real-time.
         </p>
-        <div className="mt-8 flex justify-center">
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button asChild size="lg">
-            <Link href="/dashboard">
-              Mulai Sekarang
+            <Link href="/login">
+              Login Internal (BLUD/OPD/Pemda)
               <ArrowRight className="h-4 w-4" />
             </Link>
+          </Button>
+          <Button asChild variant="outline" size="lg">
+            <Link href="/harga-pangan">Lihat Harga Bahan Pokok</Link>
           </Button>
         </div>
       </div>

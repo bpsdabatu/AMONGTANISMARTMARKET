@@ -18,12 +18,30 @@ sudah selesai 100%. Yang sudah tersedia:
 | Tabel pendukung Modul 2–9 (struktur dasar) | ✅ Selesai |
 | RLS Policy untuk seluruh tabel & role | ✅ Selesai |
 | Data dummy / seed untuk testing | ✅ Selesai |
-| Autentikasi (login, session, middleware) | ✅ Selesai |
-| Dashboard eksekutif (Modul 10) — versi awal | 🟡 Starter, perlu grafik & realtime |
+| Autentikasi berbasis **username** (login internal) | ✅ Selesai |
+| Pemisahan **dashboard publik** vs **dashboard internal** | ✅ Selesai |
+| Dashboard publik: Harga Bahan Pokok (`/harga-pangan`) | ✅ Selesai — input manual, lihat catatan sumber data |
+| Dashboard eksekutif internal (Modul 10) — versi awal | 🟡 Starter, perlu grafik & realtime |
 | CRUD penuh tiap modul (form tambah/edit/hapus di UI) | ⬜ Belum — struktur data & RLS sudah siap, tinggal dibuat halamannya |
 | Modul 11 — Analisis prediktif (server-side) | ⬜ Belum — bagian landing page sudah ada, fungsi hitung prediksi belum |
 | Export PDF/Excel/Print | ⬜ Belum |
 | Integrasi QRIS aktual | ⬜ Belum — placeholder env var tersedia |
+| Sinkronisasi otomatis harga dari Siskaperbapo Jatim | ⬜ Belum — situs tidak punya API publik & memblokir bot. Perlu permohonan data resmi ke Disperindag Jatim |
+
+Struktur database & RLS sudah mencakup seluruh 11 modul, jadi menambah
+halaman CRUD per modul tinggal mengikuti pola yang sama seperti
+`app/internal/dashboard`.
+
+## Publik vs Internal
+
+- **Dashboard Publik** (tanpa login): `/` (beranda), `/harga-pangan`
+  (harga bahan pokok). Bisa diakses siapa saja, termasuk masyarakat umum.
+- **Dashboard Internal** (wajib login dengan username): `/internal/*`,
+  khusus staf BLUD/OPD/Pemda. Dijaga oleh `app/internal/layout.tsx` —
+  otomatis redirect ke `/login` jika belum masuk, atau ke beranda jika
+  peran akun tidak termasuk staf pasar.
+- Login pakai **username**, bukan email — lihat
+  `supabase/PANDUAN_AKUN_STAF.md` untuk cara membuat akun staf.
 
 Struktur database & RLS sudah mencakup seluruh 11 modul, jadi menambah
 halaman CRUD per modul tinggal mengikuti pola yang sama seperti

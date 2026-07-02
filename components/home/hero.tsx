@@ -31,8 +31,8 @@ export function Hero() {
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button asChild size="lg">
-              <Link href="/dashboard">
-                Buka Dashboard Eksekutif
+              <Link href="/harga-pangan">
+                Lihat Harga Bahan Pokok
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

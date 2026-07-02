@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const links = [
-  { href: "#modul", label: "Modul" },
-  { href: "#peran", label: "Peran Pengguna" },
-  { href: "#analitik", label: "Analitik" },
-  { href: "#teknologi", label: "Teknologi" },
+  { href: "/harga-pangan", label: "Harga Pangan" },
+  { href: "/#modul", label: "Modul" },
+  { href: "/#peran", label: "Peran Pengguna" },
+  { href: "/#analitik", label: "Analitik" },
 ];
 
 export function Navbar() {
@@ -30,23 +30,20 @@ export function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="text-sm font-medium text-muted-foreground transition hover:text-foreground"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
           <ThemeToggle />
           <Button asChild variant="outline" size="sm">
-            <Link href="/login">Masuk</Link>
-          </Button>
-          <Button asChild size="sm">
-            <Link href="/dashboard">Buka Dashboard</Link>
+            <Link href="/login">Login Internal</Link>
           </Button>
         </div>
 
@@ -63,14 +60,14 @@ export function Navbar() {
         <div className="border-t border-border bg-background px-6 py-4 md:hidden">
           <div className="flex flex-col gap-4">
             {links.map((l) => (
-              <a key={l.href} href={l.href} className="text-sm font-medium">
+              <Link key={l.href} href={l.href} className="text-sm font-medium">
                 {l.label}
-              </a>
+              </Link>
             ))}
             <div className="flex items-center gap-3 pt-2">
               <ThemeToggle />
               <Button asChild variant="outline" size="sm" className="flex-1">
-                <Link href="/login">Masuk</Link>
+                <Link href="/login">Login Internal</Link>
               </Button>
             </div>
           </div>

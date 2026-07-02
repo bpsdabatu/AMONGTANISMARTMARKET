@@ -20,10 +20,11 @@ export default function LoginPage() {
     setError(null);
     setLoading(true);
 
-    // 1) Cari email yang terhubung dengan username ini
+    // Username disimpan di profiles, tapi Supabase Auth login pakai email.
+    // Fungsi ini menerjemahkan username -> email tanpa membocorkan data lain.
     const { data: email, error: lookupError } = await supabase.rpc(
-      "get_email_by_username",
-      { p_username: username.trim() }
+      "email_for_username",
+      { p_username: username.trim().toLowerCase() }
     );
 
     if (lookupError || !email) {
@@ -32,14 +33,18 @@ export default function LoginPage() {
       return;
     }
 
-    // 2) Login seperti biasa menggunakan email hasil lookup
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
     setLoading(false);
-    if (error) {
+    if (signInError) {
       setError("Username atau kata sandi salah.");
       return;
     }
-    router.push("/dashboard");
+
+    router.push("/internal");
     router.refresh();
   }
 
@@ -56,10 +61,11 @@ export default function LoginPage() {
         </Link>
 
         <h1 className="text-center font-display text-xl font-semibold">
-          Masuk ke akun Anda
+          Login Internal
         </h1>
         <p className="mt-1 text-center text-sm text-muted-foreground">
-          Gunakan akun yang diberikan oleh admin pasar Anda.
+          Khusus BLUD, OPD, dan Pemerintah Daerah. Gunakan akun yang
+          diberikan oleh admin pasar Anda.
         </p>
 
         <form onSubmit={handleLogin} className="mt-8 space-y-4">
@@ -70,13 +76,13 @@ export default function LoginPage() {
             <input
               id="username"
               type="text"
+              required
               autoCapitalize="none"
               autoCorrect="off"
-              required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="mt-1.5 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              placeholder="admin.pasarbatu"
+              placeholder="mis. kepala.pasarinduk"
             />
           </div>
           <div>
@@ -104,6 +110,14 @@ export default function LoginPage() {
             {loading ? "Memproses..." : "Masuk"}
           </Button>
         </form>
+
+        <p className="mt-6 text-center text-xs text-muted-foreground">
+          Bukan staf pasar?{" "}
+          <Link href="/harga-pangan" className="font-medium text-primary">
+            Lihat harga bahan pokok
+          </Link>{" "}
+          tanpa perlu login.
+        </p>
       </div>
     </div>
   );
